@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ML Web App</title>
+</head>
+<body>
+    <h1>ML Web App</h1>
+    <form method="post">
+        <label for="ra">Ra:</label>
+        <input type="text" name="ra" required>
+        <br>
+        <label for="pr">Pr:</label>
+        <input type="text" name="pr" required>
+        <br>
+        <label>Select models:</label>
+        <br>
+        <input type="checkbox" name="model_names" value="best_rf_nusselt_grid"> best_rf_nusselt_grid<br>
+        <input type="checkbox" name="model_names" value="best_rf_nusselt_random"> best_rf_nusselt_random<br>
+        <input type="checkbox" name="model_names" value="best_rf_temp_grid"> best_rf_temp_grid<br>
+        <input type="checkbox" name="model_names" value="best_rf_temp_random"> best_rf_temp_random<br>
+        <input type="checkbox" name="model_names" value="best_rf_stream_grid"> best_rf_stream_grid<br>
+        <input type="checkbox" name="model_names" value="best_rf_stream_random"> best_rf_stream_random<br>
+        <br>
+        <input type="submit" value="Predict">
+    </form>
+    {% if nusselt_values %}
+    <h2>Nusselt Value Predictions:</h2>
+    <ul>
+    {% for model_name, nusselt_value in nusselt_values %}
+        <li>{{ model_name }}: {{ nusselt_value }}</li>
+    {% endfor %}
+    </ul>
+    {% endif %}
+    {% if contour_plots %}
+    <h2>Contour Plots:</h2>
+    {% for model_name, contour_plot in contour_plots.items() %}
+        <h3>{{ model_name }}</h3>
+        <img src="data:image/png;base64,{{ contour_plot }}" alt="{{ model_name }} Contour Plot">
+    {% endfor %}
+    {% endif %}
+    {% if error_message %}
+    <h2>Error:</h2>
+    <p>{{ error_message }}</p>
+    {% endif %}
+</body>
+</html>
